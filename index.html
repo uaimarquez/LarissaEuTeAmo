@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para você</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Parisienne&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #faf7f2;
+  --warm: #f5ede0;
+  --blush: #e8c4b8;
+  --rose:  #c97b6a;
+  --deep:  #7a3f35;
+  --ink:   #3a2a24;
+  --muted: #a08070;
+  --light-ink: #6b4f45;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* grain overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+  opacity: 1;
+}
+
+/* ── screens ── */
+.pg {
+  display: none;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.6rem 4rem;
+  text-align: center;
+}
+.pg.on { display: flex; animation: appear .9s cubic-bezier(.22,1,.36,1) both; }
+@keyframes appear {
+  from { opacity:0; transform: translateY(22px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* decorative line divider */
+.rule {
+  width: 48px; height: 1px;
+  background: var(--blush);
+  margin: 2rem auto;
+  border: none;
+}
+
+/* ── emoji rain ── */
+#rain { position:fixed; inset:0; pointer-events:none; z-index:999; overflow:hidden; }
+.drop {
+  position: absolute; top: -60px;
+  animation: drip linear forwards;
+  user-select: none;
+}
+@keyframes drip { to { top: 110vh; } }
+
+/* ══════════════════════════════
+   PAGE 1  –  senha
+══════════════════════════════ */
+#p1 { background: var(--cream); }
+
+.p1-deco {
+  font-family: 'Parisienne', cursive;
+  font-size: clamp(1rem, 4vw, 1.3rem);
+  color: var(--muted);
+  letter-spacing: .04em;
+  margin-bottom: .4rem;
+}
+
+.p1-q {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.55rem, 5vw, 2.2rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.55;
+  max-width: 480px;
+}
+
+.field-wrap { margin-top: 2.8rem; position: relative; }
+
+.name-input {
+  display: block;
+  width: min(320px, 86vw);
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--blush);
+  padding: .55rem .2rem .55rem 0;
+  font-family: 'Parisienne', cursive;
+  font-size: 1.4rem;
+  color: var(--deep);
+  text-align: center;
+  outline: none;
+  transition: border-color .3s;
+  caret-color: var(--rose);
+}
+.name-input::placeholder { color: var(--blush); font-size: 1.1rem; }
+.name-input:focus { border-color: var(--rose); }
+.name-input.wrong {
+  animation: nudge .35s ease;
+  border-color: var(--rose);
+}
+@keyframes nudge {
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-7px)}
+  60%{transform:translateX(7px)}
+}
+
+.hint { 
+  margin-top: .8rem; 
+  font-size: .9rem; 
+  font-style: italic; 
+  color: var(--muted); 
+  min-height: 1.2rem; 
+  letter-spacing: .02em; 
+}
+
+.btn-open {
+  margin-top: 2.4rem;
+  background: none;
+  border: 1px solid var(--blush);
+  border-radius: 2px;
+  padding: .7rem 2.4rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--light-ink);
+  cursor: pointer;
+  transition: background .25s, color .25s, border-color .25s;
+}
+.btn-open:hover { background: var(--blush); color: var(--deep); border-color: var(--blush); }
+
+/* ══════════════════════════════
+   PAGE 2  –  te amo
+══════════════════════════════ */
+#p2 { background: var(--warm); }
+
+.heart-row {
+  font-size: 1.5rem;
+  letter-spacing: .5rem;
+  animation: soft-pulse 2.8s ease-in-out infinite;
+  margin-bottom: .5rem;
+}
+@keyframes soft-pulse {
+  0%,100%{ opacity:.7; transform: scale(1); }
+  50%{ opacity:1; transform: scale(1.05); }
+}
+
+.love-main {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 5.5vw, 2.6rem);
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--ink);
+  max-width: 540px;
+}
+.love-main em { 
+  font-style: italic; 
+  color: var(--rose); 
+  display: block; 
+  margin-top: .4rem; 
+  font-size: 1.12em; 
+}
+
+/* ══════════════════════════════
+   PAGES 3 & 4  –  foto + texto
+══════════════════════════════ */
+.pg-photo { background: var(--cream); }
+
+.photo-frame {
+  width: min(360px, 88vw);
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+/* polaroid feel */
+.polaroid {
+  background: #fff;
+  padding: 10px 10px 42px;
+  box-shadow: 0 2px 18px rgba(90,40,30,.10), 0 1px 4px rgba(90,40,30,.07);
+  transform: rotate(-1.5deg);
+  transition: transform .4s ease;
+}
+.polaroid:nth-child(2) { transform: rotate(1.2deg); }
+.polaroid:hover { transform: rotate(0deg) scale(1.01); }
+
+.polaroid-img {
+  width: 100%;
+  aspect-ratio: 4/6;
+  object-fit: cover;
+  display: block;
+  background: var(--warm);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.polaroid-img .upload-hint {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: .5rem;
+  color: var(--muted);
+  font-size: .9rem;
+  font-style: italic;
+  pointer-events: none;
+}
+.polaroid-img .upload-hint span { font-size: 2rem; }
+.polaroid-img img { 
+  width: 100%; height: 100%; 
+  object-fit: cover; 
+  display: none;
+  position: absolute; inset: 0;
+}
+.polaroid-img input[type=file] {
+  position: absolute; inset: 0;
+  opacity: 0; cursor: pointer;
+  width: 100%; height: 100%;
+}
+
+.polaroid-caption {
+  margin-top: 6px;
+  font-family: 'Parisienne', cursive;
+  font-size: 1rem;
+  color: var(--muted);
+  text-align: center;
+  font-style: normal;
+}
+
+.photo-msg {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.15rem, 3vw, 1.4rem);
+  width: min(360px, 88vw);
+  background: none;
+  border: none;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.05rem, 3.2vw, 1.25rem);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--light-ink);
+  line-height: 1.8;
+  text-align: center;
+  resize: none;
+  outline: none;
+  padding: .4rem 0;
+  border-bottom: 1px dashed var(--blush);
+}
+.photo-msg::placeholder { color: var(--blush); }
+
+/* ══════════════════════════════
+   PAGE 5  –  a pergunta
+══════════════════════════════ */
+#p5 { background: var(--warm); }
+
+.q-pre {
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: .2rem;
+}
+.q-main {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 5vw, 2.1rem);
+  font-weight: 400;
+  color: var(--deep);
+  line-height: 1.55;
+  max-width: 520px;
+  margin-top: .6rem;
+}
+
+.choice-row {
+  display: flex;
+  gap: 1.6rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 1.4rem 2rem;
+  border: 1px solid var(--blush);
+  border-radius: 2px;
+  transition: background .3s, transform .3s;
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--ink);
+}
+.choice:hover { background: rgba(232,196,184,.25); transform: translateY(-3px); }
+
+.choice-emoji { font-size: 2rem; }
+.choice-label {
+  font-size: .85rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--light-ink);
+}
+
+/* ══════════════════════════════
+   PAGE 6  –  sim!
+══════════════════════════════ */
+#p6 { background: var(--cream); }
+
+.final-handwrite {
+  font-family: 'Parisienne', cursive;
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+  color: var(--muted);
+  margin-bottom: .6rem;
+}
+.final-main {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1.55;
+  max-width: 560px;
+}
+.final-sub {
+  margin-top: 1.2rem;
+  font-size: clamp(1rem, 2.8vw, 1.2rem);
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ── botão avançar ── */
+.btn-next {
+  margin-top: 3rem;
+  background: none;
+  border: none;
+  font-family: 'Parisienne', cursive;
+  font-size: 1.1rem;
+  color: var(--muted);
+  cursor: pointer;
+  letter-spacing: .06em;
+  position: relative;
+  padding-bottom: 2px;
+  transition: color .25s;
+}
+.btn-next::after {
+  content: '';
+  position: absolute; left: 0; bottom: 0;
+  width: 0; height: 1px;
+  background: var(--rose);
+  transition: width .3s ease;
+}
+.btn-next:hover { color: var(--rose); }
+.btn-next:hover::after { width: 100%; }
+
+/* progress dots */
+#dots {
+  position: fixed;
+  bottom: 1.6rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: .55rem;
+  z-index: 50;
+}
+.dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--blush);
+  transition: background .4s, transform .4s;
+}
+.dot.lit { background: var(--rose); transform: scale(1.4); }
+</style>
+</head>
+<body>
+
+<div id="rain"></div>
+
+<!-- dots -->
+<div id="dots">
+  <div class="dot lit" id="d1"></div>
+  <div class="dot" id="d2"></div>
+  <div class="dot" id="d3"></div>
+  <div class="dot" id="d4"></div>
+  <div class="dot" id="d5"></div>
+  <div class="dot" id="d6"></div>
+</div>
+
+<!-- ─────────── PAGE 1  senha ─────────── -->
+<div class="pg on" id="p1">
+  <p class="p1-deco">Só pra eu ter certeza. Qual a senha ? 🔐</p>
+  <p class="p1-q">Quem é a minha pessoa favorita no mundo e que me faz mais feliz?</p>
+  <div class="field-wrap">
+    <input class="name-input" id="pwd" type="text" placeholder="Escreva o nome..." autocomplete="off" spellcheck="false" />
+    <p class="hint" id="hint"></p>
+  </div>
+  <button class="btn-open" onclick="check()">entrar</button>
+</div>
+
+<!-- ─────────── PAGE 2  te amo ─────────── -->
+<div class="pg" id="p2">
+  <div class="heart-row">♡ ♡ ♡</div>
+  <hr class="rule">
+  <p class="love-main">
+    Eu te amo muito mais que tudo.<br>
+    <em>Eu te amo do tanto de estrelinhas 💫</em>
+  </p>
+  <button class="btn-next" onclick="go(3)">continuar →</button>
+</div>
+
+<!-- ─────────── PAGE 3  foto 1 ─────────── -->
+<div class="pg pg-photo" id="p3">
+  <div class="photo-frame">
+    <div class="polaroid">
+      <div class="polaroid-img" id="wrap1">
+  <img 
+    id="img1"
+    src="foto15deAgo.png"
+    alt=""
+    style="display:block;"
+  >
+</div>
+      <div class="polaroid-caption">15 de Agosto de 2024 ♡</div>
+    </div>
+  </div>
+  <p class="photo-msg">
+Eu sempre quis fazer isso. Você sempre esteve presente em todos os meus momentos mais felizes e nos mais tristes e eu não sabia como recompensar isso, afinal namoro é isso. É se doar pelo o outro sem esperar nada em troca e você faz isso muito bem!
+</p>
+  <button class="btn-next" onclick="go(4)">continuar →</button>
+</div>
+
+<!-- ─────────── PAGE 4  foto 2 ─────────── -->
+<div class="pg pg-photo" id="p4">
+  <div class="photo-frame">
+    <div class="polaroid" style="transform:rotate(1.2deg)">
+      <div class="polaroid-img" id="wrap2">
+
+  <img 
+    id="img2"
+    src="foto2deMaio26.jpeg"
+    alt=""
+    style="display:block;"
+  >
+
+</div>
+      <div class="polaroid-caption">2 de Maio de 2026 ♡</div>
+    </div>
+  </div>
+  <p class="photo-msg">
+Tudo que eu mais quero quando eu estou com você é crescer mais e mais, você me deixa forte e faz eu me sentir imortal. Sinto que com você todos nossos sonhos vão dar certo e poderemos viajar o mundo (e eu te pedir em casamento em Nova York). Sempre que precisar conte comigo amor! <br>
+Eu te amo mais que tudo. <br>
+Agora vai pra próxima página!
+</p>
+  <button class="btn-next" onclick="go(5)">continuar →</button>
+</div>
+
+<!-- ─────────── PAGE 5  a pergunta ─────────── -->
+<div class="pg" id="p5">
+  <p class="q-pre">
+    Eu não queria deixar nossa história<br>sem esse momento.
+    <br>Então hoje eu vim te perguntar oficialmente:
+  </p>
+  <hr class="rule">
+  <p class="q-main">Quer ser minha namorada? 🙈 </p>
+  <div class="choice-row">
+    <button class="choice" onclick="resp('sim')">
+      <span class="choice-emoji">👍🏼</span>
+      <span class="choice-label">Sim</span>
+    </button>
+    <button class="choice" onclick="resp('nao')">
+      <span class="choice-emoji">👎🏼</span>
+      <span class="choice-label">Não</span>
+    </button>
+  </div>
+</div>
+
+<!-- ─────────── PAGE 6  sim! ─────────── -->
+<div class="pg" id="p6">
+  <p class="final-handwrite">Agora eu preciso de um favor!</p>
+  <hr class="rule">
+  <p class="final-main">Olhe para o fundo<br>dos meus olhos!</p>
+  <p class="final-sub">♡</p>
+</div>
+
+<script>
+let cur = 1;
+
+function go(n) {
+  document.getElementById('p'+cur).classList.remove('on');
+  document.getElementById('p'+n).classList.add('on');
+  document.getElementById('d'+cur).classList.remove('lit');
+  document.getElementById('d'+n).classList.add('lit');
+  cur = n;
+  window.scrollTo(0,0);
+}
+
+// normaliza texto removendo acentos e lowercase
+function norm(s){ return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim(); }
+
+function check(){
+  const val = norm(document.getElementById('pwd').value);
+  const hint = document.getElementById('hint');
+  const inp  = document.getElementById('pwd');
+  if(val === 'larissa'){
+    hint.textContent = '';
+    go(2);
+  } else if(val === 'neymar'){
+    hint.textContent = 'Eu sabia que você ia tentar KKKKKKKKK';
+    inp.classList.add('wrong');
+    rain(['😂','🤣','😆'], 4000);
+    setTimeout(()=> inp.classList.remove('wrong'), 400);
+  } else if(!val){
+    hint.textContent = 'escreve um nome...';
+    inp.classList.add('wrong');
+    setTimeout(()=> inp.classList.remove('wrong'), 400);
+  } else {
+    hint.textContent = 'Você sabe que só tem uma!';
+    inp.classList.add('wrong');
+    setTimeout(()=> inp.classList.remove('wrong'), 400);
+  }
+}
+document.getElementById('pwd').addEventListener('keydown', e => { if(e.key==='Enter') check(); });
+
+function resp(v){
+  if(v==='sim'){
+    rain(['♡','💕','🤩','👩‍❤️‍💋‍👨','😍',], 8000);
+    go(6);
+  } else {
+    rain(['😔','🥺','💔'], 5000);
+  }
+}
+
+function rain(chars, ms){
+  const box = document.getElementById('rain');
+  const iv = setInterval(()=>{
+    const el = document.createElement('span');
+    el.className = 'drop';
+    el.textContent = chars[Math.floor(Math.random()*chars.length)];
+    el.style.left = Math.random()*98+'vw';
+    el.style.fontSize = (1.2+Math.random()*1.8).toFixed(1)+'rem';
+    el.style.opacity  = (.5+Math.random()*.5).toFixed(2);
+    el.style.color    = ['#c97b6a','#e8c4b8','#7a3f35','#a08070'][Math.floor(Math.random()*4)];
+    const dur = (1.8+Math.random()*2.2).toFixed(1);
+    el.style.animation = `drip ${dur}s linear forwards`;
+    box.appendChild(el);
+    setTimeout(()=>el.remove(), +dur*1000+200);
+  }, 100);
+  setTimeout(()=>clearInterval(iv), ms);
+}
+
+function loadImg(e, imgId, wrapId){
+  const f = e.target.files[0]; if(!f) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    const img  = document.getElementById(imgId);
+    const wrap = document.getElementById(wrapId);
+    img.src = ev.target.result;
+    img.style.display = 'block';
+    const hint = wrap.querySelector('.upload-hint');
+    if(hint) hint.style.display = 'none';
+  };
+  r.readAsDataURL(f);
+}
+</script>
+</body>
+</html>
